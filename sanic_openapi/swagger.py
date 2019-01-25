@@ -196,6 +196,6 @@ def build_spec(app, loop):
     _spec['paths'] = paths
 
 
-@blueprint.route('/swagger.json')
+@blueprint.route('/openapi.json')
 def spec(request):
     return json(_spec)
