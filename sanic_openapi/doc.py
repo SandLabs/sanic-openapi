@@ -78,6 +78,14 @@ class DateTime(Field):
         }
 
 
+class File(Field):
+    def serialize(self):
+        return {
+            "type": "file",
+            **super().serialize()
+        }
+
+
 class Dictionary(Field):
     def __init__(self, fields=None, **kwargs):
         self.fields = fields or {}
