@@ -224,6 +224,7 @@ class RouteSpec(object):
     tags = None
     exclude = None
     response = None
+    security = None
 
     def __init__(self):
         self.tags = []
@@ -313,6 +314,13 @@ def produces(*args, description='', content_type=None):
             routefield = RouteField(args[0], description=description)
             route_specs[func].produces = routefield
             route_specs[func].produces_content_type = [content_type]
+        return func
+    return inner
+
+
+def security(security=False):
+    def inner(func):
+        route_specs[func].security = security
         return func
     return inner
 

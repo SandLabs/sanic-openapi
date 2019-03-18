@@ -37,18 +37,8 @@ def build_spec(app, loop):
         "version": getattr(app.config, 'API_VERSION', '1.0.0'),
         "title": getattr(app.config, 'API_TITLE', 'API'),
         "description": getattr(app.config, 'API_DESCRIPTION', ''),
-        "termsOfService": getattr(app.config, 'API_TERMS_OF_SERVICE', ''),
+        "termsOfService": getattr(app.config, 'API_TERMS_OF_SERVICE', '')
     }
-    if getattr(app.config, 'API_CONTACT_EMAIL', None):
-        _spec['info'].update({"contact": {
-            "email": getattr(app.config, 'API_CONTACT_EMAIL', None)
-        }})
-    if getattr(app.config, 'API_LICENSE_NAME', None):
-        _spec['info'].update({"license": {
-            "name": getattr(app.config, 'API_LICENSE_NAME', None)}})
-    if getattr(app.config, 'API_LICENSE_URL', None):
-        _spec['info'].update({"license": {
-            "url": getattr(app.config, 'API_LICENSE_URL', None)}})
     _spec['schemes'] = getattr(app.config, 'API_SCHEMES', ['http'])
 
     host = getattr(app.config, 'API_HOST', None)
@@ -64,7 +54,7 @@ def build_spec(app, loop):
     # --------------------------------------------------------------- #
 
     _spec['securityDefinitions'] = getattr(app.config, 'API_SECURITY_DEFINITIONS', None)
-    _spec['security'] = getattr(app.config, 'API_SECURITY', None)
+    # _spec['security'] = getattr(app.config, 'API_SECURITY', None)
 
     # --------------------------------------------------------------- #
     # Blueprint Tags
@@ -155,8 +145,7 @@ def build_spec(app, loop):
                     "schema": serialize_schema(routefield.field),
                     "description": routefield.description
                 }
-
-            endpoint = remove_nulls({
+            route_dict = {
                 'operationId': route_spec.operation or route.name,
                 'summary': route_spec.summary,
                 'description': route_spec.description,
@@ -165,8 +154,10 @@ def build_spec(app, loop):
                 'tags': route_spec.tags or None,
                 'parameters': route_parameters,
                 'responses': responses
-            })
-
+            }
+            if route_spec.security:
+                route_dict.update({'security': getattr(app.config, 'API_SECURITY', None)})
+            endpoint = remove_nulls(route_dict)
             methods[_method.lower()] = endpoint
 
         uri_parsed = uri
