@@ -37,15 +37,7 @@ def build_spec(app, loop):
         "version": getattr(app.config, 'API_VERSION', '1.0.0'),
         "title": getattr(app.config, 'API_TITLE', 'API'),
         "description": getattr(app.config, 'API_DESCRIPTION', ''),
-        "termsOfService": getattr(app.config, 'API_TERMS_OF_SERVICE', ''),
-        "contact": {
-            "email": getattr(app.config, 'API_CONTACT_EMAIL', None)
-        },
-        "license": {
-            "name": getattr(app.config, 'API_LICENSE_NAME', None),
-            "url": getattr(app.config, 'API_LICENSE_URL', None)
-        },
-
+        "termsOfService": getattr(app.config, 'API_TERMS_OF_SERVICE', '')
     }
     _spec['schemes'] = getattr(app.config, 'API_SCHEMES', ['http'])
 

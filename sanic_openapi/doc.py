@@ -296,7 +296,7 @@ def description(text):
     return inner
 
 
-def consumes(*args, content_type=None, location='query', required=False):
+def consumes(*args, content_type='params', location='query', required=False):
     def inner(func):
         if args:
             for arg in args:
@@ -307,7 +307,7 @@ def consumes(*args, content_type=None, location='query', required=False):
     return inner
 
 
-def produces(*args, description=None, content_type=None):
+def produces(*args, description='', content_type=None):
     def inner(func):
         if args:
             routefield = RouteField(args[0], description=description)
@@ -317,7 +317,7 @@ def produces(*args, description=None, content_type=None):
     return inner
 
 
-def response(*args, description=None):
+def response(*args, description=''):
     def inner(func):
         if args:
             status_code = args[0]
