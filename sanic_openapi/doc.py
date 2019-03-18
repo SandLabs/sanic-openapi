@@ -296,7 +296,7 @@ def description(text):
     return inner
 
 
-def consumes(*args, content_type='params', location='query', required=False):
+def consumes(*args, content_type='application/json', location='query', required=False):
     def inner(func):
         if args:
             for arg in args:
