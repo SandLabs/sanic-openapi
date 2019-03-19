@@ -129,7 +129,7 @@ def build_spec(app, loop):
                 if '$ref' in route_param:
                     route_param["schema"] = {'$ref': route_param['$ref']}
                     del route_param['$ref']
-                if consumer.default_value:
+                if consumer.default_value is not None:
                     route_param.update({'default': consumer.default_value})
                 route_parameters.append(route_param)
 
