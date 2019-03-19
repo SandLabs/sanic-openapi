@@ -238,12 +238,14 @@ class RouteField(object):
     location = None
     required = None
     description = None
+    default_value = None
 
-    def __init__(self, field, location=None, required=False, description=None):
+    def __init__(self, field, location=None, required=False, description=None, default_value=None):
         self.field = field
         self.location = location
         self.required = required
         self.description = description
+        self.default_value = default_value
 
 
 route_specs = defaultdict(RouteSpec)
@@ -297,11 +299,11 @@ def description(text):
     return inner
 
 
-def consumes(*args, content_type='application/json', location='query', required=False):
+def consumes(*args, content_type='application/json', location='query', required=False, default_value=None):
     def inner(func):
         if args:
             for arg in args:
-                field = RouteField(arg, location, required)
+                field = RouteField(arg, location, required, default_value=default_value)
                 route_specs[func].consumes.append(field)
                 route_specs[func].consumes_content_type = [content_type]
         return func

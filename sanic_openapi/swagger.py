@@ -117,7 +117,7 @@ def build_spec(app, loop):
                             **prop_spec,
                             'required': consumer.required,
                             'in': consumer.location,
-                            'name': name
+                            'name': name,
                         }
                 else:
                     route_param = {
@@ -126,11 +126,11 @@ def build_spec(app, loop):
                         'in': consumer.location,
                         'name': consumer.field.name if hasattr(consumer.field, 'name') else 'body'
                     }
-
                 if '$ref' in route_param:
                     route_param["schema"] = {'$ref': route_param['$ref']}
                     del route_param['$ref']
-
+                if consumer.default_value:
+                    route_param.update({'default': consumer.default_value})
                 route_parameters.append(route_param)
 
             responses = {
