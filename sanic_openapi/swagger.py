@@ -146,7 +146,7 @@ def build_spec(app, loop):
                     "description": routefield.description
                 }
             route_dict = {
-                'operationId': route_spec.operation or route.name,
+                'operationId': _method.lower() + '.' + (route_spec.operation or route.name),
                 'summary': route_spec.summary,
                 'description': route_spec.description,
                 'consumes': consumes_content_types,
