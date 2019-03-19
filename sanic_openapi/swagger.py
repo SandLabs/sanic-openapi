@@ -131,6 +131,8 @@ def build_spec(app, loop):
                     del route_param['$ref']
                 if consumer.default_value is not None:
                     route_param.update({'default': consumer.default_value})
+                if consumer.enum is not None:
+                    route_param.update({'enum': consumer.enum})
                 route_parameters.append(route_param)
 
             responses = {
