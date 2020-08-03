@@ -148,7 +148,7 @@ class Object(Field):
     @property
     def definition(self):
         return {
-            "type": "object",
+            #"type": "object",
             "properties": {
                 key: serialize_schema(schema)
                 for key, schema in self.cls.__dict__.items()
@@ -159,7 +159,7 @@ class Object(Field):
 
     def serialize(self):
         return {
-            "type": "object",
+            #"type": "object",
             "$ref": "#/definitions/{}".format(self.object_name),
             **super().serialize()
         }
